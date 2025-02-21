@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model analyses {
+  id       String   @id @db.Uuid
+  report   String
+  keyword  String[] @db.VarChar
+  feelings Json     @db.Json
+  date     DateTime @db.Date
+
+  @@index([id], map: "ix_analyses_id")
+}
+
+model characters {
+  id            String    @id @db.Uuid
+  personality   String    @db.VarChar
+  strengths     String[]  @db.VarChar
+  weaknesses    String[]  @db.VarChar
+  hobbies       String[]  @db.VarChar
+  family        String    @db.VarChar
+  friends       String[]  @db.VarChar
+  school_life   String    @db.VarChar
+  future_dream  String    @db.VarChar
+  likes         String[]  @db.VarChar
+  dislikes      String[]  @db.VarChar
+  stress        String    @db.VarChar
+  worries       String    @db.VarChar
+  favorite_food String[]  @db.VarChar
+  other         String    @db.VarChar
+  timestamp     DateTime? @db.Timestamptz(6)
+
+  @@index([id], map: "ix_characters_id")
+}
+
+model conversations {
+  id          String    @id @db.Uuid
+  from_system Boolean
+  content     String    @db.VarChar
+  visible     Boolean?
+  timestamp   DateTime? @db.Timestamptz(6)
+
+  @@index([id], map: "ix_conversations_id")
+}
